@@ -10,3 +10,19 @@
    Author: Hugo Silva
    Text Domain: hello-dummy-plugin
   */
+
+// Security methods
+
+// Method 1
+// if(!defined('ASBPATH')) {
+//     die('You don\'t access to this plugin peasant 👮‍♂️');
+// }
+
+// Method 2
+defined('ABSPATH') or die('You don\'t access to this plugin peasant 👮‍♂️');
+
+// Method 3
+// if (! function_exists('add_action')) {
+//     echo 'You don\'t access to this plugin peasant 👮‍♂️';
+//     exit;
+// }
