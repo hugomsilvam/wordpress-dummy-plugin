@@ -33,7 +33,7 @@ class HelloDummyPlugin
 {
     function __construct()
     {
-        add_action('init', array($this, 'custom_post_type'));
+        $this->create_post_type();
     }
 
     // Register the enqueed scripts 
@@ -55,6 +55,11 @@ class HelloDummyPlugin
     {
         // flush rewrite rules
         flush_rewrite_rules();
+    }
+
+    protected function create_post_type()
+    {
+        add_action('init', array($this, 'custom_post_type'));
     }
 
     // Define a custom post type (CPT = are content types like posts and pages)
