@@ -51,10 +51,6 @@ class HelloDummyPlugin
         flush_rewrite_rules();
     }
 
-    function uninstall()
-    {
-    }
-
     // Define a custom post type (CPT = are content types like posts and pages)
     function custom_post_type()
     {
@@ -73,5 +69,3 @@ register_activation_hook(__FILE__, array($helloDummyPlugin, 'activate'));
 
 //Deactivation
 register_deactivation_hook(__FILE__, array($helloDummyPlugin, 'deactivate'));
-
-//Uninstall
