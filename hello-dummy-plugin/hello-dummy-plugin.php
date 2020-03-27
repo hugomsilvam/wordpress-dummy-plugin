@@ -33,23 +33,32 @@ class HelloDummyPlugin
 {
     function __construct()
     {
+        add_action('init', array($this, 'custom_post_type'));
     }
 
     // Define plugin actions on a class
     function activate()
     {
-        // Just for testing
-        echo 'plugin is activated';
+        // generated a CPT
+        $this->custom_post_type();
+        // flush rewrite rules
+        flush_rewrite_rules();
     }
 
     function deactivate()
     {
-        // Just for testing
-        echo 'plugin is deactivated';
+        // flush rewrite rules
+        flush_rewrite_rules();
     }
 
     function uninstall()
     {
+    }
+
+    // Define a custom post type (CPT = are content types like posts and pages)
+    function custom_post_type()
+    {
+        register_post_type('book', ['public' => true, 'label' => 'Books']);
     }
 }
 
