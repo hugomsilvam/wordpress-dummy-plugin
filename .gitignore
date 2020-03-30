@@ -2,6 +2,9 @@
 akismet/*
 hello.php
 
+# Ignore composer vendor package
+hello-dummy-plugin/vendor
+
 # Created by https://www.gitignore.io/api/linux,macos,windows,wordpress,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=linux,macos,windows,wordpress,visualstudiocode
 

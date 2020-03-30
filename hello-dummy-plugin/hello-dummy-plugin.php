@@ -27,102 +27,105 @@ defined('ABSPATH') or die('You don\'t access to this plugin peasant 👮‍♂�
 //     exit;
 // }
 
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
+}
 
-// How classes work on a Custom plugin
-class HelloDummyPlugin
-{
-    public $pluginName;
+use Inc\Activate;
+use Inc\Deactivate;
 
-    function __construct()
+if (!class_exists('HelloDummyPlugin')) {
+
+    // How classes work on a Custom plugin
+    class HelloDummyPlugin
     {
-        $this->create_post_type();
-        $this->pluginName = plugin_basename(__FILE__);
-    }
+        public $pluginName;
 
-    // Register the enqueed scripts and admin pages
-    function register()
-    {
+        function __construct()
+        {
+            // $this->create_post_type();
+            $this->pluginName = plugin_basename(__FILE__);
 
-        add_action('admin_enqueue_scripts', array($this, 'enqueue'));
+            // generated a CPT
+            $this->custom_post_type();
+        }
 
-        // add an admin page for the plugin
-        add_action('admin_menu', array($this, 'add_admin_pages'));
+        // Register the enqueed scripts and admin pages
+        function register()
+        {
 
-        // add settings filter on plugins page
-        add_filter("plugin_action_links_$this->pluginName", array($this, 'settings_link'));
-    }
+            add_action('admin_enqueue_scripts', array($this, 'enqueue'));
 
-    // Define plugin actions on a class
-    function activate()
-    {
-        // generated a CPT
-        $this->custom_post_type();
-        // flush rewrite rules
-        flush_rewrite_rules();
-    }
+            // add an admin page for the plugin
+            add_action('admin_menu', array($this, 'add_admin_pages'));
 
-    function deactivate()
-    {
-        // flush rewrite rules
-        flush_rewrite_rules();
-    }
+            // add settings filter on plugins page
+            add_filter("plugin_action_links_$this->pluginName", array($this, 'settings_link'));
+        }
 
-    protected function create_post_type()
-    {
-        add_action('init', array($this, 'custom_post_type'));
-    }
+        function activate()
+        {
+            Activate::activate();
+        }
 
-    // Define a custom post type (CPT = are content types like posts and pages)
-    function custom_post_type()
-    {
-        register_post_type('book', ['public' => true, 'label' => 'Books']);
-    }
+        function deactivate()
+        {
+            Deactivate::deactivate();
+        }
 
-    // Add scripts (js) and styles (css) to the plugin
-    function enqueue()
-    {
-        // enqueue style scripts
-        wp_enqueue_style('my-plugin-style', plugins_url('/assets/dummy.styles.css', __FILE__));
-        wp_enqueue_script('my-plugin-script', plugins_url('/assets/dummy.script.js', __FILE__));
-    }
+        protected function create_post_type()
+        {
+            add_action('init', array($this, 'custom_post_type'));
+        }
 
-    function settings_link($links)
-    {
-        $settingsLink = '<a href="admin.php?page=dummy_plugin">Settings</a>';
-        array_push($links, $settingsLink);
-        return $links;
-    }
+        // Define a custom post type (CPT = are content types like posts and pages)
+        function custom_post_type()
+        {
+            register_post_type('book', ['public' => true, 'label' => 'Books']);
+        }
 
-    function add_admin_pages()
-    {
-        add_menu_page(
-            'Dummy Plugin',
-            'Dummy Admin',
-            'manage_options',
-            'dummy_plugin',
-            array($this, 'admin_index'),
-            'dashicons-carrot',
-            200
-        );
-    }
+        // Add scripts (js) and styles (css) to the plugin
+        function enqueue()
+        {
+            // enqueue style scripts
+            wp_enqueue_style('my-plugin-style', plugins_url('/assets/dummy.styles.css', __FILE__));
+            wp_enqueue_script('my-plugin-script', plugins_url('/assets/dummy.script.js', __FILE__));
+        }
 
-    function admin_index()
-    {
-        require_once plugin_dir_path(__FILE__) . '/templates/admin.php';
+        function settings_link($links)
+        {
+            $settingsLink = '<a href="admin.php?page=dummy_plugin">Settings</a>';
+            array_push($links, $settingsLink);
+            return $links;
+        }
+
+        function add_admin_pages()
+        {
+            add_menu_page(
+                'Dummy Plugin',
+                'Dummy Admin',
+                'manage_options',
+                'dummy_plugin',
+                array($this, 'admin_index'),
+                'dashicons-carrot',
+                200
+            );
+        }
+
+        function admin_index()
+        {
+            require_once plugin_dir_path(__FILE__) . '/templates/admin.php';
+        }
     }
 }
 
-if (class_exists('HelloDummyPlugin')) {
-    $helloDummyPlugin = new HelloDummyPlugin();
-    // Now the plugin has registered the scripts
-    $helloDummyPlugin->register();
-}
+$helloDummyPlugin = new HelloDummyPlugin();
+// Now the plugin has registered the scripts
+$helloDummyPlugin->register();
 
 // Hook the class plugin actions using wordpress hooks
-
 // Activation
 register_activation_hook(__FILE__, array($helloDummyPlugin, 'activate'));
 
 //Deactivation
 register_deactivation_hook(__FILE__, array($helloDummyPlugin, 'deactivate'));
- 
