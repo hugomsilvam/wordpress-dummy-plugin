@@ -13,7 +13,9 @@ final class Init
     static function services()
     {
         return [
-            Pages\Admin::class
+            Pages\Admin::class,
+            Base\Enqueue::class,
+            Base\SettingsLinks::class
         ];
     }
 
