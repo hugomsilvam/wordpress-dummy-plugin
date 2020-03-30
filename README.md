@@ -2,7 +2,7 @@
 
 Learn how to create a plugin from scratch on wordpress.
 
-I followed [Allecaddd's tutorials](https://www.youtube.com/playlist?list=PLriKzYyLb28kR_CPMz8uierDWC2y3znI2), I could have forked his [repository](https://github.com/Alecaddd/WordPressPlugin101) but he has already a lot of things done and I'm quite a beginer working with Wordpress, so I prefer to keep it thinks clean and simple 🧹😅
+I followed [Allecaddd's tutorials](https://www.youtube.com/playlist?list=PLriKzYyLb28kR_CPMz8uierDWC2y3znI2), I could have forked his [repository](https://github.com/Alecaddd/WordPressPlugin101) but he has already a lot of things done and I'm quite a beginner working with Wordpress, so I prefer to keep it thinks clean and simple 🧹😅
 
 ## Install wordpress on MacOS
 
